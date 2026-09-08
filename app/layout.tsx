@@ -5,6 +5,7 @@ import TabBar from "@/components/TabBar";
 export const metadata: Metadata = {
   title: "Joshua's Table",
   description: "A simple guide to the food Josh loves — made for Lucia",
+  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {

@@ -9,6 +9,7 @@ export type Recipe = {
   confirmed: boolean; // confirmed favorite vs "wants to try"
   ig?: string;
   note?: string;
+  shopNote?: string; // Accra availability, researched Sep 2026
   ingredients: { label: string; items: string[] }[];
   steps: string[];
 };
@@ -16,6 +17,7 @@ export type Recipe = {
 export const RECIPES: Recipe[] = [
   {
     id: "cheeseburger-tacos",
+    shopNote: "American dill pickles are rare — use Lebanese pickled cucumbers (MaxMart) with a pinch of dried dill.",
     title: "Sheet-Pan Cheeseburger Tacos",
     emoji: "🌮",
     colors: ["#FFB86B", "#FF7A45"],
@@ -61,6 +63,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "scallion-breakfast-burrito",
+    shopNote: "Frozen scallion pancakes are unavailable in Accra — make them fresh from a simple flour dough.",
     title: "Scallion-Pancake Breakfast Burrito",
     emoji: "🌯",
     colors: ["#7BD88F", "#3CB371"],
@@ -87,6 +90,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "beef-arayes",
+    shopNote: "Tahini is in MaxMart's Lebanese section, sold as tahina.",
     title: "Beef Arayes with Garlic-Tahini Yogurt Sauce",
     emoji: "🥙",
     colors: ["#F5C97B", "#D99A3D"],
@@ -189,6 +193,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "creamy-tuscan-chicken",
+    shopNote: "Sun-dried tomatoes are usually only found as paste — check MaxMart or Fairway. Cream is at Melcom and MaxMart.",
     title: "Creamy Tuscan Chicken + Roasted-Garlic Mash",
     emoji: "🍗",
     colors: ["#F7A072", "#E86A33"],
@@ -230,6 +235,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "garlic-parm-pasta",
+    shopNote: "No mafaldine in Accra — Barilla tagliatelle or fettuccine from MaxMart works.",
     title: "Chicken Garlic-Parmesan Pasta",
     emoji: "🍝",
     colors: ["#F9D976", "#F39F3F"],
@@ -292,6 +298,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "pb-protein-cookies",
+    shopNote: "Protein powder is at supplement shops, not supermarkets. Swap PB2 for regular peanut butter.",
     title: "Peanut-Butter Protein Cookies",
     emoji: "🍪",
     colors: ["#E8B98C", "#C68B59"],
@@ -329,6 +336,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "hot-honey-buffalo-tenders",
+    shopNote: "No Buffalo sauce in Accra — mix hot sauce with melted butter. Swap potato starch for corn flour 1:1.",
     title: "Hot-Honey Buffalo Chicken Tenders",
     emoji: "🍯",
     colors: ["#FF8E53", "#E5484D"],
@@ -360,6 +368,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "caramelized-onion-spaghetti",
+    shopNote: "Chili crisp: try Great Wall in Osu, or make your own — hot oil over chili flakes and garlic.",
     title: "Caramelized-Onion and Garlic Spaghetti",
     emoji: "🧅",
     colors: ["#C9A0DC", "#8E6BBF"],
@@ -392,6 +401,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "nashville-popcorn-chicken",
+    shopNote: "Buttermilk isn't sold in Accra — use 1 cup milk + 1 tbsp lemon juice, rested 10 minutes.",
     title: "Nashville Popcorn Chicken + Buttermilk Ranch",
     emoji: "🔥",
     colors: ["#FF6B6B", "#C0392B"],
@@ -451,6 +461,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: "mongolian-chicken",
+    shopNote: "Blue Dragon hoisin at MaxMart is confirmed seafood-free. Never use oyster sauce.",
     title: "Mongolian Chicken — Seafood-Safe Version",
     emoji: "🥢",
     colors: ["#6BB8FF", "#3D6FD9"],
@@ -552,7 +563,7 @@ export type Dish = {
   name: string;
   emoji: string;
   meal: "breakfast" | "main"; // main = lunch or dinner
-  confirmed: boolean; // ⭐ confirmed favorite → weighted up
+  confirmed: boolean; // confirmed favorite → weighted up
   protein: string;
   recipeId?: string; // links to a full recipe card
 };
@@ -684,7 +695,7 @@ export const CATEGORIES: Category[] = [
       { label: "Rice dishes — definitely works", items: ["Jollof rice (chicken / beef / pork)", "Jollof + chili or pepper sauce", "Fried rice (chicken / beef / pork)", "Waakye (+ beef, chicken or stew)", "Plain rice + beef or chicken sauce or stew", "Rice + groundnut, light or palm nut soup"] },
       { label: "Soups — definitely works", items: ["Groundnut soup (chicken / beef / goat)", "Light soup (chicken / beef / goat)", "Palm nut soup (chicken / beef / goat)"] },
       { label: "Stews & sauces", items: ["Beef or chicken sauce", "Beef or chicken tomato stew", "Goat stew", "Pork stew", "Bean stew + the right side", "Tomato-based meat sauces", "Pepper/chili sauces"] },
-      { label: "Sides & snacks", items: ["Kelewele ⭐", "Bofrot ⭐", "Meat pies", "Fried yam", "Yam + stew or sauce", "Fried or roasted potatoes"] },
+      { label: "Sides & snacks", items: ["Kelewele", "Bofrot", "Meat pies", "Fried yam", "Yam + stew or sauce", "Fried or roasted potatoes"] },
       { label: "No", items: ["Okro soup/stew", "Kontomire stew"] },
     ],
   },
@@ -692,9 +703,9 @@ export const CATEGORIES: Category[] = [
     title: "Chicken", emoji: "🍗",
     intro: "Chicken is very safe territory. If a restaurant has chicken tenders, there's a good chance Josh orders them.",
     groups: [
-      { label: "Fried / crispy", items: ["Chicken tenders ⭐", "Spicy chicken tenders", "Fried chicken", "Chicken wings", "Chicken katsu ⭐ (+ rice or fries)", "Popcorn chicken", "Chicken schnitzel", "Breaded cutlets"] },
-      { label: "Sandwiches / handheld", items: ["Spicy chicken sandwich ⭐", "Crispy or grilled chicken sandwich", "Chicken wrap", "Chicken quesadilla", "Chicken tacos / burrito / fajitas", "Chicken shawarma wrap"] },
-      { label: "Chicken + rice", items: ["Teriyaki chicken + rice ⭐", "Chicken fried rice", "Chicken stir-fry + rice", "Chicken curry + rice", "Garlic or honey-garlic chicken + rice", "BBQ or pepper chicken + rice", "Chicken jollof", "Chicken katsu rice bowl"] },
+      { label: "Fried / crispy", items: ["Chicken tenders", "Spicy chicken tenders", "Fried chicken", "Chicken wings", "Chicken katsu (+ rice or fries)", "Popcorn chicken", "Chicken schnitzel", "Breaded cutlets"] },
+      { label: "Sandwiches / handheld", items: ["Spicy chicken sandwich", "Crispy or grilled chicken sandwich", "Chicken wrap", "Chicken quesadilla", "Chicken tacos / burrito / fajitas", "Chicken shawarma wrap"] },
+      { label: "Chicken + rice", items: ["Teriyaki chicken + rice", "Chicken fried rice", "Chicken stir-fry + rice", "Chicken curry + rice", "Garlic or honey-garlic chicken + rice", "BBQ or pepper chicken + rice", "Chicken jollof", "Chicken katsu rice bowl"] },
       { label: "Other", items: ["Roast or grilled chicken", "Garlic-butter / lemon-garlic / honey-garlic chicken", "Teriyaki or BBQ chicken", "Chicken curry or stir-fry", "Chicken skewers or kebabs", "Chicken Parmesan", "Chicken shawarma"] },
     ],
   },
@@ -702,8 +713,8 @@ export const CATEGORIES: Category[] = [
     title: "Beef & carne asada", emoji: "🥩",
     intro: "Savory meats you can slice into — beef and steak dishes fit perfectly.",
     groups: [
-      { label: "Beef", items: ["Steak (+ rice, fries, potatoes or vegetables)", "Garlic-butter or pepper steak", "Beef skewers or kebabs", "Beef stir-fry + rice ⭐ or noodles", "Beef fried rice or noodles", "Beef curry + rice", "Beef sauce + rice ⭐", "Beef stew or jollof", "Meatballs + pasta or rice", "Cheeseburger", "Loaded beef fries"] },
-      { label: "Carne asada / Mexican beef", items: ["Carne asada ⭐", "Carne asada tacos ⭐", "Carne asada fries ⭐", "Carne asada burrito, quesadilla or rice bowl", "Steak tacos or fajitas", "Beef tacos, burritos or quesadillas"] },
+      { label: "Beef", items: ["Steak (+ rice, fries, potatoes or vegetables)", "Garlic-butter or pepper steak", "Beef skewers or kebabs", "Beef stir-fry + rice or noodles", "Beef fried rice or noodles", "Beef curry + rice", "Beef sauce + rice", "Beef stew or jollof", "Meatballs + pasta or rice", "Cheeseburger", "Loaded beef fries"] },
+      { label: "Carne asada / Mexican beef", items: ["Carne asada", "Carne asada tacos", "Carne asada fries", "Carne asada burrito, quesadilla or rice bowl", "Steak tacos or fajitas", "Beef tacos, burritos or quesadillas"] },
     ],
   },
   {
@@ -717,22 +728,22 @@ export const CATEGORIES: Category[] = [
     title: "Pasta", emoji: "🍝",
     intro: "Different types of pasta generally work — that gives you a LOT of freedom.",
     groups: [
-      { label: "Pasta dishes", items: ["Chicken Alfredo ⭐", "Fettuccine Alfredo", "Spaghetti Bolognese ⭐", "Spaghetti + meat sauce or meatballs", "Penne + tomato or meat sauce, chicken or beef", "Carbonara (chicken, bacon or spaghetti)", "Baked ziti ⭐", "Lasagna", "Chicken Parmesan + spaghetti", "Creamy garlic or garlic-butter chicken pasta", "Spicy chicken pasta", "Pasta bakes", "Mac and cheese"] },
+      { label: "Pasta dishes", items: ["Chicken Alfredo", "Fettuccine Alfredo", "Spaghetti Bolognese", "Spaghetti + meat sauce or meatballs", "Penne + tomato or meat sauce, chicken or beef", "Carbonara (chicken, bacon or spaghetti)", "Baked ziti", "Lasagna", "Chicken Parmesan + spaghetti", "Creamy garlic or garlic-butter chicken pasta", "Spicy chicken pasta", "Pasta bakes", "Mac and cheese"] },
     ],
   },
   {
     title: "Thai / Asian-style", emoji: "🍜",
     intro: "⚠️ Check every Asian sauce for seafood: fish sauce, oyster sauce, shrimp paste and some curry pastes contain it.",
     groups: [
-      { label: "Confirmed", items: ["Chicken Pad Thai ⭐", "Chicken katsu + rice ⭐", "Teriyaki chicken (+ rice) ⭐", "Beef stir-fry + rice ⭐", "Chicken fried noodles ⭐"] },
+      { label: "Confirmed", items: ["Chicken Pad Thai", "Chicken katsu + rice", "Teriyaki chicken (+ rice)", "Beef stir-fry + rice", "Chicken fried noodles"] },
       { label: "Fits those tastes", items: ["Chicken / beef / pork stir-fry", "Fried rice (any meat)", "Noodles (any meat)", "Teriyaki beef or pork", "Garlic chicken or beef + rice", "Honey-garlic chicken", "Chicken or beef curry + rice", "Rice bowls"] },
     ],
   },
   {
     title: "Mexican / Tex-Mex", emoji: "🌮",
     groups: [
-      { label: "Confirmed favorites", items: ["Carne asada tacos ⭐", "Carne asada fries ⭐"] },
-      { label: "Very compatible", items: ["Carne asada burrito, quesadilla or rice bowl", "Tacos (steak, chicken, beef or pork)", "Burritos and quesadillas (any meat, or cheese)", "Fajitas (chicken, steak or beef)", "Loaded fries or nachos with meat + cheese", "Mexican-style rice bowls", "Chorizo + potatoes and/or eggs", "Breakfast burritos ⭐ and quesadillas"] },
+      { label: "Confirmed favorites", items: ["Carne asada tacos", "Carne asada fries"] },
+      { label: "Very compatible", items: ["Carne asada burrito, quesadilla or rice bowl", "Tacos (steak, chicken, beef or pork)", "Burritos and quesadillas (any meat, or cheese)", "Fajitas (chicken, steak or beef)", "Loaded fries or nachos with meat + cheese", "Mexican-style rice bowls", "Chorizo + potatoes and/or eggs", "Breakfast burritos and quesadillas"] },
     ],
   },
   {
@@ -748,7 +759,7 @@ export const CATEGORIES: Category[] = [
   {
     title: "American / comfort", emoji: "🍔",
     groups: [
-      { label: "Good", items: ["Chicken tenders ⭐", "Fried chicken and wings", "Spicy chicken sandwich ⭐", "Cheeseburger + fries", "Loaded fries", "Grilled cheese", "Mac and cheese", "BBQ chicken or pork", "Steak + fries", "Garlic bread and dinner rolls", "Roasted potatoes, fries, sweet potato fries"] },
+      { label: "Good", items: ["Chicken tenders", "Fried chicken and wings", "Spicy chicken sandwich", "Cheeseburger + fries", "Loaded fries", "Grilled cheese", "Mac and cheese", "BBQ chicken or pork", "Steak + fries", "Garlic bread and dinner rolls", "Roasted potatoes, fries, sweet potato fries"] },
       { label: "No", items: ["Hot dogs", "Onion rings"] },
     ],
   },

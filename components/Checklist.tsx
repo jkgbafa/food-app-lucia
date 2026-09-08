@@ -22,12 +22,12 @@ export default function Checklist({ items }: { items: string[] }) {
               className="flex w-full items-center gap-3 py-2.5 text-left"
             >
               <span
-                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
                   done ? "border-accent bg-accent" : "border-black/20"
                 }`}
               >
                 {done && (
-                  <svg viewBox="0 0 24 24" className="h-3 w-3 stroke-white" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" className="h-3 w-3 stroke-white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 13l4 4L19 7" />
                   </svg>
                 )}
