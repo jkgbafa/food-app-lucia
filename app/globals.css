@@ -40,3 +40,39 @@ details > summary::-webkit-details-marker {
 details[open] .chevron {
   transform: rotate(90deg);
 }
+
+/* Total Wife entrance */
+@keyframes tw-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes tw-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 239, 231, 0);
+    border-color: rgba(243, 239, 231, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 34px 4px rgba(243, 239, 231, 0.35);
+    border-color: rgba(243, 239, 231, 0.95);
+  }
+}
+.tw-fade-up {
+  animation: tw-fade-up 0.9s ease-out both;
+}
+.tw-glow {
+  animation: tw-glow 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tw-fade-up,
+  .tw-glow {
+    animation: none;
+    opacity: 1;
+  }
+}

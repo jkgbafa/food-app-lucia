@@ -10,27 +10,39 @@ export default function HomePage() {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("tw-splash")) return;
-    sessionStorage.setItem("tw-splash", "1");
-    setSplash(true);
-    const t1 = setTimeout(() => setFading(true), 1300);
-    const t2 = setTimeout(() => setSplash(false), 1900);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    if (!sessionStorage.getItem("tw-splash")) setSplash(true);
   }, []);
+
+  const enter = () => {
+    sessionStorage.setItem("tw-splash", "1");
+    setFading(true);
+    setTimeout(() => setSplash(false), 600);
+  };
 
   return (
     <div>
       {splash && (
         <div
           className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#181614] transition-opacity duration-500 ${
-            fading ? "opacity-0" : "opacity-100"
+            fading ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
-          <p className="text-[15px] tracking-[0.3em] text-white/50">FOR LUCIA</p>
-          <h1 className="mt-3 font-serif text-[44px] font-medium text-[#f3efe7]">The Total Wife</h1>
+          <p className="tw-fade-up text-[14px] tracking-[0.35em] text-white/50" style={{ animationDelay: "0.2s" }}>
+            FOR LUCIA
+          </p>
+          <h1
+            className="tw-fade-up mt-3 font-serif text-[44px] font-medium text-[#f3efe7]"
+            style={{ animationDelay: "0.45s" }}
+          >
+            The Total Wife
+          </h1>
+          <button
+            onClick={enter}
+            className="tw-fade-up tw-glow mt-14 cursor-pointer rounded-full border px-14 py-3.5 text-[15px] font-medium tracking-[0.25em] text-[#f3efe7] transition-transform duration-150 active:scale-95"
+            style={{ animationDelay: "1.1s, 1.6s" }}
+          >
+            ENTER
+          </button>
         </div>
       )}
 
