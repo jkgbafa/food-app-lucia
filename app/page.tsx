@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RECIPES, IDEA_BANK, type Idea } from "@/lib/data";
+import { BASE } from "@/lib/base";
 
 const FILTERS = ["All", "Chicken", "Beef", "Pasta", "Breakfast", "Dessert"];
 
@@ -93,7 +94,7 @@ export default function RecipesPage() {
           {shown.map((r, i) => (
             <Link key={r.id} href={`/recipes/${r.id}`} className="cursor-pointer">
               <img
-                src={`/photos/${r.id}.jpg`}
+                src={`${BASE}/photos/${r.id}.jpg`}
                 alt={r.title}
                 className="h-36 w-full rounded-2xl object-cover"
                 loading={i > 3 ? "lazy" : "eager"}
@@ -111,7 +112,7 @@ export default function RecipesPage() {
               href={`/recipes/${r.id}`}
               className="flex cursor-pointer items-center gap-3 border-b border-black/5 px-3 py-3 transition-colors duration-150 last:border-b-0 hover:bg-fill active:bg-fill"
             >
-              <img src={`/photos/${r.id}.jpg`} alt="" className="h-14 w-14 shrink-0 rounded-xl object-cover" loading="lazy" />
+              <img src={`${BASE}/photos/${r.id}.jpg`} alt="" className="h-14 w-14 shrink-0 rounded-xl object-cover" loading="lazy" />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[15px] font-medium">{r.title}</span>
                 <span className="block text-[13px] text-muted">
@@ -139,13 +140,22 @@ export default function RecipesPage() {
             rel="noreferrer"
             className="flex cursor-pointer items-center gap-3 border-b border-black/5 px-4 py-3.5 transition-colors duration-150 last:border-b-0 hover:bg-fill active:bg-fill"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-fill">
-              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
-              </svg>
-            </span>
+            {idea.img ? (
+              <img
+                src={idea.img.startsWith("http") ? idea.img : BASE + idea.img}
+                alt=""
+                className="h-10 w-10 shrink-0 rounded-xl object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-fill">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+                </svg>
+              </span>
+            )}
             <span className="min-w-0 flex-1">
               <span className="block truncate text-[15px] font-medium">{idea.title}</span>
               <span className="block truncate text-[13px] text-muted">{idea.note}</span>

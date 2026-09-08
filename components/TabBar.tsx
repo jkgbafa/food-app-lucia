@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation";
 
 const TABS = [
   {
+    href: "/josh",
+    label: "Josh",
+    icon: <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c0-3.3 3.1-6 7-6s7 2.7 7 6" />,
+  },
+  {
     href: "/",
     label: "Recipes",
     icon: <path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2Zm0 0a2 2 0 0 1 2-2h12M8 7h6" />,
@@ -13,11 +18,6 @@ const TABS = [
     href: "/plan",
     label: "Plan",
     icon: <path d="M8 3v3m8-3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />,
-  },
-  {
-    href: "/josh",
-    label: "Josh",
-    icon: <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c0-3.3 3.1-6 7-6s7 2.7 7 6" />,
   },
 ];
 

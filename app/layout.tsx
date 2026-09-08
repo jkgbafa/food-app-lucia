@@ -5,7 +5,11 @@ import TabBar from "@/components/TabBar";
 export const metadata: Metadata = {
   title: "Joshua's Table",
   description: "A simple guide to the food Josh loves — made for Lucia",
-  manifest: "/manifest.json",
+  manifest: "/food-app-lucia/manifest.json",
+  icons: {
+    icon: "/food-app-lucia/icon-192.png",
+    apple: "/food-app-lucia/apple-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

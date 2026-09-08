@@ -540,21 +540,21 @@ export const RECIPES: Recipe[] = [
   },
 ];
 
-export type Idea = { title: string; emoji: string; note: string; ig?: string };
+export type Idea = { title: string; emoji: string; note: string; ig?: string; img?: string };
 
 export const IDEA_BANK: Idea[] = [
-  { title: "Brookie loaf", emoji: "🍩", note: "Recipe offered by the creator through DM", ig: "https://www.instagram.com/sadieskitchenjournal/reel/DcxCOJ3J6l2/" },
-  { title: "GhaPanAmerican burgers", emoji: "🍔", note: "Restaurant review — Cowboy & Samurai", ig: "https://www.instagram.com/abena.zip/reel/Da0qQhDo0DV/" },
-  { title: "Brown-butter brownie-stuffed banana bread", emoji: "🍌", note: "Recipe on creator's blog", ig: "https://www.instagram.com/wellmadebykiley/reel/DY7WLCERvf9/" },
-  { title: "Mixed-fruit & mango shaved ice", emoji: "🍧", note: "Bobo GH, Marina Mall — outing idea", ig: "https://www.instagram.com/abena.zip/reel/DYVLMrYoD_r/" },
-  { title: "Chocolate-chip-cookie tips", emoji: "🍪", note: "Full recipe linked by creator", ig: "https://www.instagram.com/buzzfeedtasty/reel/DZLYB8EAiqz/" },
-  { title: "Chili-oil garlic-butter pasta", emoji: "🌶️", note: "Recipe linked by creator", ig: "https://www.instagram.com/erinscozykitchen/reel/DOdrc7pjXmG/" },
-  { title: "Beef-and-broccoli fried rice", emoji: "🥦", note: "Recipe linked by creator", ig: "https://www.instagram.com/geniuseatss/reel/DOUedHhE902/" },
-  { title: "Oreo cinnamon rolls", emoji: "🌀", note: "Recipe linked by creator", ig: "https://www.instagram.com/stephaniesweettreats/reel/DJZUb0ixL_h/" },
-  { title: "Five chicken marinades", emoji: "🧊", note: "Freezer meal prep — recipe linked by creator", ig: "https://www.instagram.com/moribyan/reel/DMF7eG7x3F4/" },
-  { title: "Honey-butter chicken", emoji: "🍯", note: "Recipe linked by creator", ig: "https://www.instagram.com/hermanathome/reel/DJpO8cuysso/" },
-  { title: "Work-lunch sandwich", emoji: "🥪", note: "Visual assembly only", ig: "https://www.instagram.com/iamuniquedaily/reel/DPLWMSqDKHz/" },
-  { title: "Chocolate-chip-cookie churro + ice cream", emoji: "🍦", note: "Restaurant / product inspiration", ig: "https://www.instagram.com/foodbeast/reel/DJJ_k3HJ9To/" },
+  { img: "/photos/cake-slice.jpg", title: "Brookie loaf", emoji: "🍩", note: "Recipe offered by the creator through DM", ig: "https://www.instagram.com/sadieskitchenjournal/reel/DcxCOJ3J6l2/" },
+  { img: "/photos/burger.jpg", title: "GhaPanAmerican burgers", emoji: "🍔", note: "Restaurant review — Cowboy & Samurai", ig: "https://www.instagram.com/abena.zip/reel/Da0qQhDo0DV/" },
+  { img: "/photos/banana-bread.jpg", title: "Brown-butter brownie-stuffed banana bread", emoji: "🍌", note: "Recipe on creator's blog", ig: "https://www.instagram.com/wellmadebykiley/reel/DY7WLCERvf9/" },
+  { img: "/photos/sundae.jpg", title: "Mixed-fruit & mango shaved ice", emoji: "🍧", note: "Bobo GH, Marina Mall — outing idea", ig: "https://www.instagram.com/abena.zip/reel/DYVLMrYoD_r/" },
+  { img: "/photos/cookies2.jpg", title: "Chocolate-chip-cookie tips", emoji: "🍪", note: "Full recipe linked by creator", ig: "https://www.instagram.com/buzzfeedtasty/reel/DZLYB8EAiqz/" },
+  { img: "/photos/caramelized-onion-spaghetti.jpg", title: "Chili-oil garlic-butter pasta", emoji: "🌶️", note: "Recipe linked by creator", ig: "https://www.instagram.com/erinscozykitchen/reel/DOdrc7pjXmG/" },
+  { img: "/photos/fried-rice.jpg", title: "Beef-and-broccoli fried rice", emoji: "🥦", note: "Recipe linked by creator", ig: "https://www.instagram.com/geniuseatss/reel/DOUedHhE902/" },
+  { img: "/photos/cake-slice.jpg", title: "Oreo cinnamon rolls", emoji: "🌀", note: "Recipe linked by creator", ig: "https://www.instagram.com/stephaniesweettreats/reel/DJZUb0ixL_h/" },
+  { img: "/photos/skewers.jpg", title: "Five chicken marinades", emoji: "🧊", note: "Freezer meal prep — recipe linked by creator", ig: "https://www.instagram.com/moribyan/reel/DMF7eG7x3F4/" },
+  { img: "/photos/cutlets.jpg", title: "Honey-butter chicken", emoji: "🍯", note: "Recipe linked by creator", ig: "https://www.instagram.com/hermanathome/reel/DJpO8cuysso/" },
+  { img: "/photos/grilled-cheese.jpg", title: "Work-lunch sandwich", emoji: "🥪", note: "Visual assembly only", ig: "https://www.instagram.com/iamuniquedaily/reel/DPLWMSqDKHz/" },
+  { img: "/photos/sundae.jpg", title: "Chocolate-chip-cookie churro + ice cream", emoji: "🍦", note: "Restaurant / product inspiration", ig: "https://www.instagram.com/foodbeast/reel/DJJ_k3HJ9To/" },
 ];
 
 // ---- Dish pool for the weekly plan generator ----
@@ -563,6 +563,7 @@ export type Dish = {
   name: string;
   emoji: string;
   meal: "breakfast" | "main"; // main = lunch or dinner
+  img?: string; // card/thumb photo when the dish has no full recipe
   confirmed: boolean; // confirmed favorite → weighted up
   protein: string;
   recipeId?: string; // links to a full recipe card
@@ -570,78 +571,78 @@ export type Dish = {
 
 export const DISHES: Dish[] = [
   // Breakfast
-  { name: "Breakfast burritos", emoji: "🌯", meal: "breakfast", confirmed: true, protein: "eggs" },
-  { name: "Chorizo breakfast burrito", emoji: "🌯", meal: "breakfast", confirmed: true, protein: "chorizo" },
-  { name: "Cheese omelette", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
-  { name: "Loaded omelette", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
-  { name: "Chorizo + potatoes + eggs", emoji: "🥔", meal: "breakfast", confirmed: true, protein: "chorizo" },
-  { name: "Bacon + potatoes + eggs", emoji: "🥓", meal: "breakfast", confirmed: true, protein: "bacon" },
-  { name: "Scrambled eggs + fried potatoes", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
-  { name: "Potato tortilla (Spanish tortilla)", emoji: "🇪🇸", meal: "breakfast", confirmed: true, protein: "eggs" },
-  { name: "Pancakes", emoji: "🥞", meal: "breakfast", confirmed: true, protein: "none" },
-  { name: "Breakfast skillet", emoji: "🍲", meal: "breakfast", confirmed: false, protein: "eggs" },
-  { name: "Breakfast quesadilla", emoji: "🫓", meal: "breakfast", confirmed: false, protein: "eggs" },
-  { name: "Breakfast fried rice (leftover rice + eggs + meat)", emoji: "🍚", meal: "breakfast", confirmed: false, protein: "eggs" },
-  { name: "French toast", emoji: "🍞", meal: "breakfast", confirmed: false, protein: "none" },
-  { name: "Waffles", emoji: "🧇", meal: "breakfast", confirmed: false, protein: "none" },
+  { img: "/photos/scallion-breakfast-burrito.jpg", name: "Breakfast burritos", emoji: "🌯", meal: "breakfast", confirmed: true, protein: "eggs" },
+  { img: "/photos/scallion-breakfast-burrito.jpg", name: "Chorizo breakfast burrito", emoji: "🌯", meal: "breakfast", confirmed: true, protein: "chorizo" },
+  { img: "/photos/omelette.jpg", name: "Cheese omelette", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
+  { img: "/photos/omelette.jpg", name: "Loaded omelette", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
+  { img: "/photos/eggs-breakfast.jpg", name: "Chorizo + potatoes + eggs", emoji: "🥔", meal: "breakfast", confirmed: true, protein: "chorizo" },
+  { img: "/photos/eggs-breakfast.jpg", name: "Bacon + potatoes + eggs", emoji: "🥓", meal: "breakfast", confirmed: true, protein: "bacon" },
+  { img: "/photos/eggs-breakfast.jpg", name: "Scrambled eggs + fried potatoes", emoji: "🍳", meal: "breakfast", confirmed: true, protein: "eggs" },
+  { img: "/photos/omelette.jpg", name: "Potato tortilla (Spanish tortilla)", emoji: "🇪🇸", meal: "breakfast", confirmed: true, protein: "eggs" },
+  { img: "/photos/pancakes.jpg", name: "Pancakes", emoji: "🥞", meal: "breakfast", confirmed: true, protein: "none" },
+  { img: "/photos/omelette.jpg", name: "Breakfast skillet", emoji: "🍲", meal: "breakfast", confirmed: false, protein: "eggs" },
+  { img: "/photos/quesadilla.jpg", name: "Breakfast quesadilla", emoji: "🫓", meal: "breakfast", confirmed: false, protein: "eggs" },
+  { img: "/photos/fried-rice.jpg", name: "Breakfast fried rice (leftover rice + eggs + meat)", emoji: "🍚", meal: "breakfast", confirmed: false, protein: "eggs" },
+  { img: "/photos/french-toast.jpg", name: "French toast", emoji: "🍞", meal: "breakfast", confirmed: false, protein: "none" },
+  { img: "/photos/waffles.jpg", name: "Waffles", emoji: "🧇", meal: "breakfast", confirmed: false, protein: "none" },
   { name: "Scallion-pancake breakfast burrito", emoji: "🌯", meal: "breakfast", confirmed: false, protein: "eggs", recipeId: "scallion-breakfast-burrito" },
 
   // Mains — Ghanaian
-  { name: "Jollof rice + chicken", emoji: "🍛", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Beef jollof", emoji: "🍛", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Waakye + beef", emoji: "🫘", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Chicken fried rice", emoji: "🍚", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Groundnut soup + rice", emoji: "🥜", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Light soup + chicken", emoji: "🍲", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Palm nut soup + rice", emoji: "🍲", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Rice + beef sauce", emoji: "🍚", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Rice + chicken tomato stew", emoji: "🍅", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Goat stew + rice", emoji: "🐐", meal: "main", confirmed: false, protein: "goat" },
-  { name: "Yam + stew, with kelewele", emoji: "🍠", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/curry.jpg", name: "Jollof rice + chicken", emoji: "🍛", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/curry.jpg", name: "Beef jollof", emoji: "🍛", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/rice-stew.jpg", name: "Waakye + beef", emoji: "🫘", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/fried-rice.jpg", name: "Chicken fried rice", emoji: "🍚", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/soup.jpg", name: "Groundnut soup + rice", emoji: "🥜", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/soup.jpg", name: "Light soup + chicken", emoji: "🍲", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/rice-stew.jpg", name: "Palm nut soup + rice", emoji: "🍲", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/rice-stew.jpg", name: "Rice + beef sauce", emoji: "🍚", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/rice-stew.jpg", name: "Rice + chicken tomato stew", emoji: "🍅", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/rice-stew.jpg", name: "Goat stew + rice", emoji: "🐐", meal: "main", confirmed: false, protein: "goat" },
+  { img: "/photos/fries.jpg", name: "Yam + stew, with kelewele", emoji: "🍠", meal: "main", confirmed: false, protein: "beef" },
 
   // Mains — chicken
-  { name: "Chicken tenders + fries", emoji: "🍗", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Spicy chicken sandwich", emoji: "🥪", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Chicken katsu + rice", emoji: "🍱", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Teriyaki chicken + rice", emoji: "🍚", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Chicken Pad Thai", emoji: "🍜", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Chicken fried noodles", emoji: "🍜", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Honey-garlic chicken + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "chicken" },
-  { name: "Chicken curry + rice", emoji: "🍛", meal: "main", confirmed: false, protein: "chicken" },
-  { name: "Chicken Alfredo", emoji: "🍝", meal: "main", confirmed: true, protein: "chicken" },
-  { name: "Chicken Parmesan + spaghetti", emoji: "🍝", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/cutlets.jpg", name: "Chicken tenders + fries", emoji: "🍗", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/sandwich.jpg", name: "Spicy chicken sandwich", emoji: "🥪", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/cutlets.jpg", name: "Chicken katsu + rice", emoji: "🍱", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/rice-bowl.jpg", name: "Teriyaki chicken + rice", emoji: "🍚", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/noodles.jpg", name: "Chicken Pad Thai", emoji: "🍜", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/noodles.jpg", name: "Chicken fried noodles", emoji: "🍜", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/rice-bowl.jpg", name: "Honey-garlic chicken + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/curry.jpg", name: "Chicken curry + rice", emoji: "🍛", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/garlic-parm-pasta.jpg", name: "Chicken Alfredo", emoji: "🍝", meal: "main", confirmed: true, protein: "chicken" },
+  { img: "/photos/penne.jpg", name: "Chicken Parmesan + spaghetti", emoji: "🍝", meal: "main", confirmed: false, protein: "chicken" },
   { name: "Hot-honey Buffalo chicken tenders", emoji: "🔥", meal: "main", confirmed: false, protein: "chicken", recipeId: "hot-honey-buffalo-tenders" },
   { name: "Nashville popcorn chicken + mash", emoji: "🔥", meal: "main", confirmed: false, protein: "chicken", recipeId: "nashville-popcorn-chicken" },
   { name: "Mongolian chicken (seafood-safe)", emoji: "🥢", meal: "main", confirmed: false, protein: "chicken", recipeId: "mongolian-chicken" },
   { name: "Creamy Tuscan chicken + garlic mash", emoji: "🍗", meal: "main", confirmed: false, protein: "chicken", recipeId: "creamy-tuscan-chicken" },
   { name: "Chicken garlic-Parmesan pasta", emoji: "🍝", meal: "main", confirmed: false, protein: "chicken", recipeId: "garlic-parm-pasta" },
-  { name: "Honey-butter chicken + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/rice-bowl.jpg", name: "Honey-butter chicken + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "chicken" },
 
   // Mains — beef / pork
-  { name: "Carne asada tacos", emoji: "🌮", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Carne asada fries", emoji: "🍟", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Beef stir-fry + rice", emoji: "🥩", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Spaghetti Bolognese", emoji: "🍝", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Baked ziti", emoji: "🧀", meal: "main", confirmed: true, protein: "beef" },
-  { name: "Steak + roasted potatoes", emoji: "🥩", meal: "main", confirmed: false, protein: "beef" },
-  { name: "Garlic-butter steak + rice", emoji: "🧄", meal: "main", confirmed: false, protein: "beef" },
-  { name: "Cheeseburger + fries", emoji: "🍔", meal: "main", confirmed: false, protein: "beef" },
-  { name: "Meatballs + pasta", emoji: "🍝", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/tacos.jpg", name: "Carne asada tacos", emoji: "🌮", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/nachos.jpg", name: "Carne asada fries", emoji: "🍟", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/rice-bowl.jpg", name: "Beef stir-fry + rice", emoji: "🥩", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/bolognese.jpg", name: "Spaghetti Bolognese", emoji: "🍝", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/penne.jpg", name: "Baked ziti", emoji: "🧀", meal: "main", confirmed: true, protein: "beef" },
+  { img: "/photos/steak.jpg", name: "Steak + roasted potatoes", emoji: "🥩", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/steak.jpg", name: "Garlic-butter steak + rice", emoji: "🧄", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/burger.jpg", name: "Cheeseburger + fries", emoji: "🍔", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/meatballs.jpg", name: "Meatballs + pasta", emoji: "🍝", meal: "main", confirmed: false, protein: "beef" },
   { name: "Sheet-pan cheeseburger tacos", emoji: "🌮", meal: "main", confirmed: false, protein: "beef", recipeId: "cheeseburger-tacos" },
   { name: "Beef arayes + garlic-tahini sauce", emoji: "🥙", meal: "main", confirmed: false, protein: "beef", recipeId: "beef-arayes" },
-  { name: "Beef-and-broccoli fried rice", emoji: "🥦", meal: "main", confirmed: false, protein: "beef" },
-  { name: "Pork chops + roasted potatoes", emoji: "🐖", meal: "main", confirmed: false, protein: "pork" },
-  { name: "Honey-garlic pork + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "pork" },
-  { name: "Pork stir-fry + noodles", emoji: "🍜", meal: "main", confirmed: false, protein: "pork" },
-  { name: "Chorizo + potatoes", emoji: "🥔", meal: "main", confirmed: false, protein: "chorizo" },
+  { img: "/photos/fried-rice.jpg", name: "Beef-and-broccoli fried rice", emoji: "🥦", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/pork-chops.jpg", name: "Pork chops + roasted potatoes", emoji: "🐖", meal: "main", confirmed: false, protein: "pork" },
+  { img: "/photos/rice-bowl.jpg", name: "Honey-garlic pork + rice", emoji: "🍯", meal: "main", confirmed: false, protein: "pork" },
+  { img: "/photos/noodles.jpg", name: "Pork stir-fry + noodles", emoji: "🍜", meal: "main", confirmed: false, protein: "pork" },
+  { img: "/photos/fries.jpg", name: "Chorizo + potatoes", emoji: "🥔", meal: "main", confirmed: false, protein: "chorizo" },
 
   // Mains — pasta / other
   { name: "Caramelized-onion garlic spaghetti", emoji: "🧅", meal: "main", confirmed: false, protein: "none", recipeId: "caramelized-onion-spaghetti" },
-  { name: "Creamy garlic chicken pasta", emoji: "🍝", meal: "main", confirmed: false, protein: "chicken" },
-  { name: "Mac and cheese + crispy chicken", emoji: "🧀", meal: "main", confirmed: false, protein: "chicken" },
-  { name: "Chicken quesadillas", emoji: "🫓", meal: "main", confirmed: false, protein: "chicken" },
-  { name: "Steak fajitas", emoji: "🥩", meal: "main", confirmed: false, protein: "beef" },
-  { name: "Nachos with meat + cheese", emoji: "🧀", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/garlic-parm-pasta.jpg", name: "Creamy garlic chicken pasta", emoji: "🍝", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/mac-cheese.jpg", name: "Mac and cheese + crispy chicken", emoji: "🧀", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/quesadilla.jpg", name: "Chicken quesadillas", emoji: "🫓", meal: "main", confirmed: false, protein: "chicken" },
+  { img: "/photos/steak.jpg", name: "Steak fajitas", emoji: "🥩", meal: "main", confirmed: false, protein: "beef" },
+  { img: "/photos/nachos.jpg", name: "Nachos with meat + cheese", emoji: "🧀", meal: "main", confirmed: false, protein: "beef" },
 ];
 
 // ---- Josh's guide content ----
@@ -666,31 +667,17 @@ export const VERY_SAFE = [
   "Kelewele", "Bofrot", "Breakfast burritos", "Omelettes",
 ];
 
-export const CHEAT_CODE: [string, string, string][] = [
-  ["Chicken", "Rice", "Ghanaian stew"],
-  ["Beef", "Jollof", "Pepper/chili"],
-  ["Pork", "Fried rice", "Garlic butter"],
-  ["Steak", "Potatoes", "Savory beef sauce"],
-  ["Chicken", "Pasta", "Alfredo"],
-  ["Beef", "Pasta", "Tomato/meat sauce"],
-  ["Chicken", "Noodles", "Thai"],
-  ["Beef", "Rice", "Stir-fry"],
-  ["Chicken", "Rice", "Teriyaki"],
-  ["Carne asada", "Tortilla", "Mexican"],
-  ["Chorizo", "Potatoes", "Breakfast"],
-  ["Eggs", "Potatoes", "Breakfast"],
-];
-
 export type Category = {
   title: string;
   emoji: string;
+  meals: ("breakfast" | "lunch" | "dinner" | "dessert")[];
   intro?: string;
   groups: { label: string; items: string[] }[];
 };
 
 export const CATEGORIES: Category[] = [
   {
-    title: "Ghanaian food", emoji: "🇬🇭",
+    title: "Ghanaian food", meals: ["lunch","dinner"], emoji: "🇬🇭",
     groups: [
       { label: "Rice dishes — definitely works", items: ["Jollof rice (chicken / beef / pork)", "Jollof + chili or pepper sauce", "Fried rice (chicken / beef / pork)", "Waakye (+ beef, chicken or stew)", "Plain rice + beef or chicken sauce or stew", "Rice + groundnut, light or palm nut soup"] },
       { label: "Soups — definitely works", items: ["Groundnut soup (chicken / beef / goat)", "Light soup (chicken / beef / goat)", "Palm nut soup (chicken / beef / goat)"] },
@@ -700,7 +687,7 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Chicken", emoji: "🍗",
+    title: "Chicken", meals: ["lunch","dinner"], emoji: "🍗",
     intro: "Chicken is very safe territory. If a restaurant has chicken tenders, there's a good chance Josh orders them.",
     groups: [
       { label: "Fried / crispy", items: ["Chicken tenders", "Spicy chicken tenders", "Fried chicken", "Chicken wings", "Chicken katsu (+ rice or fries)", "Popcorn chicken", "Chicken schnitzel", "Breaded cutlets"] },
@@ -710,7 +697,7 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Beef & carne asada", emoji: "🥩",
+    title: "Beef & carne asada", meals: ["lunch","dinner"], emoji: "🥩",
     intro: "Savory meats you can slice into — beef and steak dishes fit perfectly.",
     groups: [
       { label: "Beef", items: ["Steak (+ rice, fries, potatoes or vegetables)", "Garlic-butter or pepper steak", "Beef skewers or kebabs", "Beef stir-fry + rice or noodles", "Beef fried rice or noodles", "Beef curry + rice", "Beef sauce + rice", "Beef stew or jollof", "Meatballs + pasta or rice", "Cheeseburger", "Loaded beef fries"] },
@@ -718,21 +705,21 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Pork", emoji: "🐖",
+    title: "Pork", meals: ["lunch","dinner"], emoji: "🐖",
     intro: "Pork is a yes.",
     groups: [
       { label: "Pork dishes", items: ["Pork chops (grilled, pan-fried or garlic-butter)", "Pork + rice, potatoes or vegetables", "Pork fried rice, stir-fry or noodles", "BBQ, honey-garlic or teriyaki pork", "Pork skewers or kebabs", "Pork tacos, burritos or quesadillas", "Pork jollof or stew", "Bacon", "Chorizo"] },
     ],
   },
   {
-    title: "Pasta", emoji: "🍝",
+    title: "Pasta", meals: ["lunch","dinner"], emoji: "🍝",
     intro: "Different types of pasta generally work — that gives you a LOT of freedom.",
     groups: [
       { label: "Pasta dishes", items: ["Chicken Alfredo", "Fettuccine Alfredo", "Spaghetti Bolognese", "Spaghetti + meat sauce or meatballs", "Penne + tomato or meat sauce, chicken or beef", "Carbonara (chicken, bacon or spaghetti)", "Baked ziti", "Lasagna", "Chicken Parmesan + spaghetti", "Creamy garlic or garlic-butter chicken pasta", "Spicy chicken pasta", "Pasta bakes", "Mac and cheese"] },
     ],
   },
   {
-    title: "Thai / Asian-style", emoji: "🍜",
+    title: "Thai / Asian-style", meals: ["lunch","dinner"], emoji: "🍜",
     intro: "⚠️ Check every Asian sauce for seafood: fish sauce, oyster sauce, shrimp paste and some curry pastes contain it.",
     groups: [
       { label: "Confirmed", items: ["Chicken Pad Thai", "Chicken katsu + rice", "Teriyaki chicken (+ rice)", "Beef stir-fry + rice", "Chicken fried noodles"] },
@@ -740,14 +727,14 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Mexican / Tex-Mex", emoji: "🌮",
+    title: "Mexican / Tex-Mex", meals: ["lunch","dinner"], emoji: "🌮",
     groups: [
       { label: "Confirmed favorites", items: ["Carne asada tacos", "Carne asada fries"] },
       { label: "Very compatible", items: ["Carne asada burrito, quesadilla or rice bowl", "Tacos (steak, chicken, beef or pork)", "Burritos and quesadillas (any meat, or cheese)", "Fajitas (chicken, steak or beef)", "Loaded fries or nachos with meat + cheese", "Mexican-style rice bowls", "Chorizo + potatoes and/or eggs", "Breakfast burritos and quesadillas"] },
     ],
   },
   {
-    title: "Breakfast", emoji: "🍳",
+    title: "Breakfast", meals: ["breakfast"], emoji: "🍳",
     groups: [
       { label: "Confirmed", items: ["Cereal", "Omelettes", "Eggs + potatoes", "Chorizo", "Potato tortilla / Spanish tortilla", "Pancakes", "Breakfast burritos"] },
       { label: "Omelettes", items: ["Cheese", "Meat + cheese", "Chorizo", "Chicken", "Bacon", "Potato", "Pepper + cheese", "Loaded"] },
@@ -757,14 +744,14 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "American / comfort", emoji: "🍔",
+    title: "American / comfort", meals: ["lunch","dinner"], emoji: "🍔",
     groups: [
       { label: "Good", items: ["Chicken tenders", "Fried chicken and wings", "Spicy chicken sandwich", "Cheeseburger + fries", "Loaded fries", "Grilled cheese", "Mac and cheese", "BBQ chicken or pork", "Steak + fries", "Garlic bread and dinner rolls", "Roasted potatoes, fries, sweet potato fries"] },
       { label: "No", items: ["Hot dogs", "Onion rings"] },
     ],
   },
   {
-    title: "Potatoes", emoji: "🥔",
+    title: "Potatoes", meals: ["breakfast","lunch","dinner"], emoji: "🥔",
     intro: "Different kinds of potatoes are confirmed — don't limit this to fries.",
     groups: [
       { label: "Good", items: ["French fries and sweet potato fries", "Roasted (plain or garlic)", "Fried / pan-fried / breakfast potatoes", "Potato wedges and baked potatoes", "Mashed regular potatoes", "Hash browns", "Potato tortilla", "Potatoes + eggs / chorizo / steak / chicken / pork", "Cheesy or loaded potatoes", "Carne asada fries"] },
@@ -772,16 +759,31 @@ export const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Sides & drinks", emoji: "🥤",
+    title: "Sides", meals: ["lunch", "dinner"], emoji: "🍟",
     groups: [
       { label: "Good sides", items: ["Rice, jollof, fried rice", "Kelewele", "Fries, roasted or mashed potatoes", "Mac and cheese", "Corn on the cob", "Sautéed / cooked vegetables", "Noodles and pasta", "Garlic bread, dinner rolls", "Yam fries"] },
       { label: "Depends", items: ["Plantain — preparation matters", "Salad — not really a fan"] },
       { label: "No sides", items: ["Potato salad", "Coleslaw", "Baked beans", "Onion rings", "Mashed sweet potatoes"] },
-      { label: "Drinks", items: ["Lemonade", "Orange, pineapple and mango juice", "BEL Active", "Other fruit juices", "Water", "(Generally avoids soda)"] },
     ],
   },
   {
-    title: "Pantry / ingredient bank", emoji: "🛒",
+    title: "Drinks", meals: ["breakfast", "lunch", "dinner"], emoji: "🥤",
+    groups: [
+      { label: "Likes", items: ["Lemonade", "Orange juice", "Pineapple juice", "Mango juice", "BEL Active", "Other fruit juices", "Water"] },
+      { label: "Generally avoids", items: ["Soda"] },
+    ],
+  },
+  {
+    title: "Desserts & sweets", meals: ["dessert"], emoji: "🍰",
+    intro: "Confirmed interests from the saved collection — things Josh wants to try.",
+    groups: [
+      { label: "Sweets & treats", items: ["Brookie loaf", "Brown-butter brownie-stuffed banana bread", "Chocolate-chip cookies", "Chocolate moist cake with crémeux", "Homemade peanut butter", "Peanut-butter protein cookies", "Oreo cinnamon rolls", "Cookie churro + vanilla ice cream", "Homemade ice cream", "Mixed-fruit shaved ice + condensed milk", "Mango shaved ice + fresh mango", "Bofrot"] },
+    ],
+  },
+];
+
+export const PANTRY: Category = {
+    title: "Ingredient bank", meals: [], emoji: "🛒",
     intro: "Look at what's available and think: “Okay, what can I make from this?”",
     groups: [
       { label: "Meat & protein — NO seafood", items: ["Chicken (breasts, thighs, tenderloins, wings, whole)", "Ground beef, beef strips, steak, stew beef", "Goat meat", "Pork chops, loin, strips", "Bacon and chorizo", "Eggs", "Beans for bean stew"] },
@@ -793,5 +795,4 @@ export const CATEGORIES: Category[] = [
       { label: "Asian / Thai pantry — check labels for seafood", items: ["Soy and teriyaki sauce", "Sesame oil and rice vinegar", "Chili sauce, honey, brown sugar", "Curry seasonings"] },
       { label: "Seasonings & sauces", items: ["Salt, pepper, garlic and onion powder", "Paprika (plain + smoked), chili powder, cayenne", "Curry powder, cumin, thyme, oregano, basil, rosemary", "BBQ, pepper and chili sauces", "Garlic butter, cream and cheese sauces", "Salsa, ketchup, mustard, honey, hot sauce"] },
     ],
-  },
-];
+};

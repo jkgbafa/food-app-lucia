@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export", // fully static — deploys to Netlify/any static host as the out/ dir
+  output: "export", // fully static
+  basePath: "/food-app-lucia", // served from GitHub Pages project path
 };
 
 export default nextConfig;

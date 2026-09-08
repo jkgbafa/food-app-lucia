@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DISHES, type Dish } from "@/lib/data";
-import { generateWeek, reroll, type DayPlan } from "@/lib/generator";
+import { BASE, findPhoto } from "@/lib/base";
+import { generateWeek, type DayPlan } from "@/lib/generator";
 
 const MEALS = [
   { key: "breakfast", label: "Breakfast" },
@@ -11,6 +12,12 @@ const MEALS = [
   { key: "dinner", label: "Dinner" },
 ] as const;
 type MealKey = (typeof MEALS)[number]["key"];
+
+function slotImg(dish: Dish): string | undefined {
+  if (dish.recipeId) return `${BASE}/photos/${dish.recipeId}.jpg`;
+  if (dish.img) return dish.img.startsWith("http") ? dish.img : BASE + dish.img;
+  return undefined;
+}
 
 export default function PlanPage() {
   const [week, setWeek] = useState<DayPlan[] | null>(null);
@@ -32,12 +39,36 @@ export default function PlanPage() {
   };
 
   const setSlot = (dayIdx: number, meal: MealKey, dish: Dish) => {
-    if (!week) return;
-    const next = week.map((d) => ({ ...d }));
-    next[dayIdx] = { ...next[dayIdx], [meal]: { dish } };
-    save(next);
+    setWeek((week) => {
+      if (!week) return week;
+      const next = week.map((d) => ({ ...d }));
+      next[dayIdx] = { ...next[dayIdx], [meal]: { dish } };
+      localStorage.setItem("jt-week", JSON.stringify(next));
+      return next;
+    });
     setPicker(null);
     setPickerQuery("");
+  };
+
+  const setCustom = async (dayIdx: number, meal: MealKey, name: string) => {
+    const dish: Dish = {
+      name,
+      emoji: "",
+      meal: meal === "breakfast" ? "breakfast" : "main",
+      confirmed: false,
+      protein: "custom",
+    };
+    setSlot(dayIdx, meal, dish);
+    const img = await findPhoto(name);
+    if (img) setWeek((week) => {
+      if (!week) return week;
+      const next = week.map((d) => ({ ...d }));
+      if (next[dayIdx][meal].dish.name === name) {
+        next[dayIdx] = { ...next[dayIdx], [meal]: { dish: { ...dish, img } } };
+        localStorage.setItem("jt-week", JSON.stringify(next));
+      }
+      return next;
+    });
   };
 
   const current = picker && week ? week[picker.dayIdx][picker.meal] : null;
@@ -62,7 +93,7 @@ export default function PlanPage() {
       >
         {week ? "Regenerate the week" : "Plan this week"}
       </button>
-      {week && <p className="mb-6 text-center text-[13px] text-muted">Tap any meal to change it</p>}
+      {week && <p className="mb-6 text-center text-[13px] text-muted">Tap any meal to change it or type your own</p>}
 
       {loaded && !week && (
         <div className="mt-4 rounded-3xl border border-black/10 p-10 text-center">
@@ -76,44 +107,37 @@ export default function PlanPage() {
           <div className="overflow-hidden rounded-3xl border border-black/10">
             {MEALS.map(({ key, label }) => {
               const slot = day[key];
+              const img = slotImg(slot.dish);
               return (
-                <div key={key} className="flex items-center gap-3 border-b border-black/5 px-4 py-3 last:border-b-0">
-                  <button
-                    onClick={() => setPicker({ dayIdx: di, meal: key })}
-                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left"
-                  >
-                    {slot.dish.recipeId ? (
-                      <img src={`/photos/${slot.dish.recipeId}.jpg`} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" />
-                    ) : (
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-fill">
-                        <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round">
-                          <path d="M5 3v7a2 2 0 0 0 2 2v9M9 3v7M7 3v7M17 3c-1.5 1.5-2 4-2 6v3h2.5v9" />
-                        </svg>
-                      </span>
-                    )}
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted">{label}</span>
-                      <span className="block truncate text-[15px] font-medium">
-                        {slot.leftovers ? `Leftovers · ${slot.dish.name}` : slot.dish.name}
-                        {slot.dish.confirmed && !slot.leftovers && (
-                          <svg viewBox="0 0 24 24" className="ml-1.5 inline h-3 w-3 fill-none stroke-foreground align-baseline" strokeWidth="1.5" strokeLinejoin="round">
-                            <path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.1-5.6 3.1 1.3-6.2L3 9.5l6.3-.7z" />
-                          </svg>
-                        )}
-                      </span>
+                <button
+                  key={key}
+                  onClick={() => setPicker({ dayIdx: di, meal: key })}
+                  className="flex w-full cursor-pointer items-center gap-3 border-b border-black/5 px-4 py-3 text-left transition-colors duration-150 last:border-b-0 hover:bg-fill active:bg-fill"
+                >
+                  {img ? (
+                    <img src={img} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" loading="lazy" />
+                  ) : (
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-fill">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round">
+                        <path d="M5 3v7a2 2 0 0 0 2 2v9M9 3v7M7 3v7M17 3c-1.5 1.5-2 4-2 6v3h2.5v9" />
+                      </svg>
                     </span>
-                  </button>
-                  <button
-                    aria-label={`Shuffle ${label.toLowerCase()} for ${day.day}`}
-                    onClick={() => save(reroll(week, di, key))}
-                    className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150 hover:bg-fill active:bg-fill"
-                  >
-                    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M4 4v6h6M20 20v-6h-6" />
-                      <path d="M20 9a8 8 0 0 0-14.9-3M4 15a8 8 0 0 0 14.9 3" />
-                    </svg>
-                  </button>
-                </div>
+                  )}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-semibold uppercase tracking-wide text-muted">{label}</span>
+                    <span className="block truncate text-[15px] font-medium">
+                      {slot.leftovers ? `Leftovers · ${slot.dish.name}` : slot.dish.name}
+                      {slot.dish.confirmed && !slot.leftovers && (
+                        <svg viewBox="0 0 24 24" className="ml-1.5 inline h-3 w-3 fill-none stroke-foreground align-baseline" strokeWidth="1.5" strokeLinejoin="round">
+                          <path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.1-5.6 3.1 1.3-6.2L3 9.5l6.3-.7z" />
+                        </svg>
+                      )}
+                    </span>
+                  </span>
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 stroke-black/25" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
+                </button>
               );
             })}
           </div>
@@ -154,32 +178,50 @@ export default function PlanPage() {
                 <input
                   value={pickerQuery}
                   onChange={(e) => setPickerQuery(e.target.value)}
-                  placeholder="Search"
+                  placeholder="Search or type your own"
                   className="w-full bg-transparent text-[15px] outline-none placeholder:text-muted"
                 />
               </label>
             </div>
             <div className="px-2 pb-4">
-              {pool.map((d) => (
+              {pickerQuery.trim() && (
                 <button
-                  key={d.name}
-                  onClick={() => setSlot(picker.dayIdx, picker.meal, d)}
+                  onClick={() => setCustom(picker.dayIdx, picker.meal, pickerQuery.trim())}
                   className="flex w-full cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors duration-150 hover:bg-fill active:bg-fill"
                 >
-                  {d.recipeId ? (
-                    <img src={`/photos/${d.recipeId}.jpg`} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" loading="lazy" />
-                  ) : (
-                    <span className="h-10 w-10 shrink-0 rounded-lg bg-fill" />
-                  )}
-                  <span className="flex-1 truncate text-[15px]">{d.name}</span>
-                  {d.confirmed && (
-                    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 fill-none stroke-foreground" strokeWidth="1.5" strokeLinejoin="round">
-                      <path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.1-5.6 3.1 1.3-6.2L3 9.5l6.3-.7z" />
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-foreground text-white">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round">
+                      <path d="M12 5v14M5 12h14" />
                     </svg>
-                  )}
+                  </span>
+                  <span className="flex-1 truncate text-[15px] font-medium">Use &ldquo;{pickerQuery.trim()}&rdquo;</span>
                 </button>
-              ))}
-              {pool.length === 0 && <p className="py-8 text-center text-[14px] text-muted">Nothing matches.</p>}
+              )}
+              {pool.map((d) => {
+                const img = slotImg(d);
+                return (
+                  <button
+                    key={d.name}
+                    onClick={() => setSlot(picker.dayIdx, picker.meal, d)}
+                    className="flex w-full cursor-pointer items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors duration-150 hover:bg-fill active:bg-fill"
+                  >
+                    {img ? (
+                      <img src={img} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" loading="lazy" />
+                    ) : (
+                      <span className="h-10 w-10 shrink-0 rounded-lg bg-fill" />
+                    )}
+                    <span className="flex-1 truncate text-[15px]">{d.name}</span>
+                    {d.confirmed && (
+                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 fill-none stroke-foreground" strokeWidth="1.5" strokeLinejoin="round">
+                        <path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2-5.6-3.1-5.6 3.1 1.3-6.2L3 9.5l6.3-.7z" />
+                      </svg>
+                    )}
+                  </button>
+                );
+              })}
+              {pool.length === 0 && !pickerQuery.trim() && (
+                <p className="py-8 text-center text-[14px] text-muted">Nothing here.</p>
+              )}
             </div>
           </div>
         </div>

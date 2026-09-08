@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Idea } from "@/lib/data";
+import { findPhoto } from "@/lib/base";
 
 // ponytail: v1 saves the link + notes to localStorage. Real caption/video
 // synthesis needs a server route + an AI API key — upgrade path is a
@@ -21,13 +22,14 @@ export default function ImportPage() {
     else if (shared) setTitle(shared);
   }, []);
 
-  const submit = () => {
+  const submit = async () => {
     if (!url.trim() && !title.trim()) return;
     const idea: Idea = {
       title: title.trim() || url.trim(),
       emoji: "",
       note: "Saved from Instagram",
       ig: url.trim() || undefined,
+      img: title.trim() ? await findPhoto(title.trim()) : undefined,
     };
     const ideas = JSON.parse(localStorage.getItem("jt-ideas") ?? "[]");
     localStorage.setItem("jt-ideas", JSON.stringify([idea, ...ideas]));

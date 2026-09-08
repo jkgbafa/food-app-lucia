@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RECIPES } from "@/lib/data";
+import { BASE } from "@/lib/base";
 import Checklist from "@/components/Checklist";
 
 export function generateStaticParams() {
@@ -26,7 +27,7 @@ export default async function RecipePage({ params }: { params: Promise<{ id: str
         </svg>
       </Link>
 
-      <img src={`/photos/${recipe.id}.jpg`} alt={recipe.title} className="h-60 w-full rounded-3xl object-cover" />
+      <img src={`${BASE}/photos/${recipe.id}.jpg`} alt={recipe.title} className="h-60 w-full rounded-3xl object-cover" />
 
       <h1 className="mt-4 text-[24px] font-semibold leading-tight tracking-tight">{recipe.title}</h1>
       <p className="mt-1 text-[14px] text-muted">

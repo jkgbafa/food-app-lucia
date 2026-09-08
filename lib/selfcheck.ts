@@ -15,6 +15,7 @@ function mulberry32(seed: number) {
 
 const SEAFOOD = /shrimp|fish|oyster|salmon|prawn|crab|tuna|seafood(?!-safe)/i;
 assert(DISHES.every((d) => !SEAFOOD.test(d.name)), "no seafood in the dish pool");
+assert(DISHES.every((d) => d.img || d.recipeId), "every dish has an image");
 
 let confirmedPicks = 0, totalPicks = 0;
 for (let seed = 1; seed <= 50; seed++) {
