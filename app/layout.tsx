@@ -3,8 +3,8 @@ import "./globals.css";
 import TabBar from "@/components/TabBar";
 
 export const metadata: Metadata = {
-  title: "Joshua's Table",
-  description: "A simple guide to the food Josh loves — made for Lucia",
+  title: "The Total Wife",
+  description: "For Lucia — everything a total wife knows, plus everything Josh loves to eat",
   manifest: "/food-app-lucia/manifest.json",
   icons: {
     icon: "/food-app-lucia/icon-192.png",

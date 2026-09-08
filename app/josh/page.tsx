@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { DONT_MAKE, VERY_SAFE, CATEGORIES, PANTRY, type Category } from "@/lib/data";
 
-const MEAL_FILTERS = ["All", "Breakfast", "Lunch", "Dinner", "Dessert"] as const;
+const MEAL_FILTERS = ["All", "Breakfast", "Lunch & Dinner", "Dessert"] as const;
 
 function CategoryDetails({ cat }: { cat: Category }) {
   return (
@@ -46,9 +46,49 @@ function CategoryDetails({ cat }: { cat: Category }) {
   );
 }
 
+function FlatCategory({ cat }: { cat: Category }) {
+  return (
+    <section className="mb-7">
+      <h2 className="text-[17px] font-semibold">{cat.title}</h2>
+      {cat.intro && <p className="mt-1 text-[13px] leading-relaxed text-muted">{cat.intro}</p>}
+      {cat.groups.map((group) => (
+        <div key={group.label} className="mt-3.5">
+          <h3
+            className={`text-[12px] font-semibold uppercase tracking-wide ${
+              group.label.startsWith("No") || group.label.startsWith("Generally avoids") ? "text-danger" : "text-muted"
+            }`}
+          >
+            {group.label}
+          </h3>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {group.items.map((item) => (
+              <span
+                key={item}
+                className={`rounded-full bg-fill px-3 py-1.5 text-[13px] ${
+                  group.label.startsWith("No") || group.label.startsWith("Generally avoids")
+                    ? "text-muted line-through"
+                    : ""
+                }`}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 export default function JoshPage() {
   const [meal, setMeal] = useState<(typeof MEAL_FILTERS)[number]>("All");
-  const shown = CATEGORIES.filter((c) => meal === "All" || c.meals.includes(meal.toLowerCase() as never));
+  const shown = CATEGORIES.filter(
+    (c) =>
+      meal === "All" ||
+      (meal === "Lunch & Dinner"
+        ? c.meals.includes("lunch") || c.meals.includes("dinner")
+        : c.meals.includes(meal.toLowerCase() as never))
+  );
 
   return (
     <div>
@@ -87,11 +127,19 @@ export default function JoshPage() {
         </section>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-black/10">
-        {shown.map((cat) => (
-          <CategoryDetails key={cat.title} cat={cat} />
-        ))}
-      </div>
+      {meal === "All" ? (
+        <div className="overflow-hidden rounded-3xl border border-black/10">
+          {shown.map((cat) => (
+            <CategoryDetails key={cat.title} cat={cat} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          {shown.map((cat) => (
+            <FlatCategory key={cat.title} cat={cat} />
+          ))}
+        </div>
+      )}
 
       <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">Ingredient bank</h2>
       <div className="overflow-hidden rounded-3xl border border-black/10">

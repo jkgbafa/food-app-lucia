@@ -2,180 +2,101 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { RECIPES, IDEA_BANK, type Idea } from "@/lib/data";
+import { ROLES, PRINCIPLES, FOUNDATION, NURSING_WIFE } from "@/lib/wife";
 import { BASE } from "@/lib/base";
 
-const FILTERS = ["All", "Chicken", "Beef", "Pasta", "Breakfast", "Dessert"];
+export default function HomePage() {
+  const [splash, setSplash] = useState(false);
+  const [fading, setFading] = useState(false);
 
-export default function RecipesPage() {
-  const [userIdeas, setUserIdeas] = useState<Idea[]>([]);
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [view, setView] = useState<"grid" | "list">("grid");
   useEffect(() => {
-    try {
-      setUserIdeas(JSON.parse(localStorage.getItem("jt-ideas") ?? "[]"));
-      const v = localStorage.getItem("jt-view");
-      if (v === "list" || v === "grid") setView(v);
-    } catch {}
+    if (sessionStorage.getItem("tw-splash")) return;
+    sessionStorage.setItem("tw-splash", "1");
+    setSplash(true);
+    const t1 = setTimeout(() => setFading(true), 1300);
+    const t2 = setTimeout(() => setSplash(false), 1900);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
-  const setViewPersist = (v: "grid" | "list") => {
-    setView(v);
-    localStorage.setItem("jt-view", v);
-  };
-
-  const shown = RECIPES.filter(
-    (r) =>
-      (filter === "All" || r.tags.includes(filter)) &&
-      (!query || r.title.toLowerCase().includes(query.toLowerCase()))
-  );
 
   return (
     <div>
-      <header className="mb-4 pt-4">
-        <p className="text-[17px] text-muted">Joshua&apos;s Table</p>
-        <h1 className="text-[26px] font-semibold leading-tight tracking-tight">
-          {RECIPES.length + userIdeas.length + IDEA_BANK.length} saved recipes
-        </h1>
+      {splash && (
+        <div
+          className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#181614] transition-opacity duration-500 ${
+            fading ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <p className="text-[15px] tracking-[0.3em] text-white/50">FOR LUCIA</p>
+          <h1 className="mt-3 font-serif text-[44px] font-medium text-[#f3efe7]">The Total Wife</h1>
+        </div>
+      )}
+
+      <header className="mb-5 pt-6">
+        <p className="text-[17px] text-muted">For Lucia</p>
+        <h1 className="text-[30px] font-semibold leading-tight tracking-tight">The Total Wife</h1>
       </header>
 
-      <div className="mb-3 flex items-center gap-2">
-        <label className="flex flex-1 items-center gap-2.5 rounded-full bg-fill px-4 py-3">
-          <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round">
-            <circle cx="11" cy="11" r="7" />
-            <path d="M20 20l-3.5-3.5" />
-          </svg>
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search"
-            className="w-full bg-transparent text-[16px] outline-none placeholder:text-muted"
-          />
-        </label>
-        <button
-          aria-label={view === "grid" ? "Switch to list view" : "Switch to grid view"}
-          onClick={() => setViewPersist(view === "grid" ? "list" : "grid")}
-          className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-fill transition-colors duration-150 active:bg-black/10"
-        >
-          {view === "grid" ? (
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-foreground" strokeWidth="1.5" strokeLinecap="round">
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-foreground" strokeWidth="1.5">
-              <rect x="4" y="4" width="7" height="7" rx="1.5" />
-              <rect x="13" y="4" width="7" height="7" rx="1.5" />
-              <rect x="4" y="13" width="7" height="7" rx="1.5" />
-              <rect x="13" y="13" width="7" height="7" rx="1.5" />
-            </svg>
-          )}
-        </button>
-      </div>
+      <p className="mb-6 rounded-3xl bg-fill p-5 text-[15px] leading-relaxed">
+        {FOUNDATION}
+        <span className="mt-2 block text-[12px] font-semibold uppercase tracking-wide text-muted">
+          Model Marriage — Dag Heward-Mills
+        </span>
+      </p>
 
-      <div className="scrollbar-none -mx-4 mb-5 flex gap-2 overflow-x-auto px-4 pb-1">
-        {FILTERS.map((f) => {
-          const active = filter === f;
-          return (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`shrink-0 cursor-pointer rounded-full border px-4 py-2 text-[14px] font-medium transition-colors duration-200 ${
-                active ? "border-foreground bg-foreground text-white" : "border-black/15 bg-white hover:border-black/30"
-              }`}
-            >
-              {f}
-            </button>
-          );
-        })}
-      </div>
-
-      {view === "grid" ? (
-        <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-          {shown.map((r, i) => (
-            <Link key={r.id} href={`/recipes/${r.id}`} className="cursor-pointer">
-              <img
-                src={`${BASE}/photos/${r.id}.jpg`}
-                alt={r.title}
-                className="h-36 w-full rounded-2xl object-cover"
-                loading={i > 3 ? "lazy" : "eager"}
-              />
-              <h2 className="mt-2 line-clamp-2 text-[14px] font-medium leading-snug">{r.title}</h2>
-              <p className="mt-0.5 text-[12px] text-muted">{r.steps.length} step{r.steps.length === 1 ? "" : "s"} · {r.tags[0]}</p>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="overflow-hidden rounded-3xl border border-black/10">
-          {shown.map((r) => (
-            <Link
-              key={r.id}
-              href={`/recipes/${r.id}`}
-              className="flex cursor-pointer items-center gap-3 border-b border-black/5 px-3 py-3 transition-colors duration-150 last:border-b-0 hover:bg-fill active:bg-fill"
-            >
-              <img src={`${BASE}/photos/${r.id}.jpg`} alt="" className="h-14 w-14 shrink-0 rounded-xl object-cover" loading="lazy" />
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[15px] font-medium">{r.title}</span>
-                <span className="block text-[13px] text-muted">
-                  {r.ingredients.reduce((n, g) => n + g.items.length, 0)} ingredients · {r.steps.length} step{r.steps.length === 1 ? "" : "s"}
-                </span>
-              </span>
-              <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 stroke-black/25" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 6l6 6-6 6" />
-              </svg>
-            </Link>
-          ))}
-        </div>
-      )}
-      {shown.length === 0 && (
-        <p className="py-10 text-center text-[15px] text-muted">Nothing matches.</p>
-      )}
-
-      <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">Idea bank</h2>
-      <div className="overflow-hidden rounded-3xl border border-black/10">
-        {[...userIdeas, ...IDEA_BANK].map((idea, i) => (
-          <a
-            key={`${idea.title}-${i}`}
-            href={idea.ig}
-            target="_blank"
-            rel="noreferrer"
-            className="flex cursor-pointer items-center gap-3 border-b border-black/5 px-4 py-3.5 transition-colors duration-150 last:border-b-0 hover:bg-fill active:bg-fill"
+      <h2 className="mb-3 text-[20px] font-semibold tracking-tight">The seven roles</h2>
+      <div className="grid grid-cols-2 gap-3">
+        {ROLES.map((r) => (
+          <Link
+            key={r.slug}
+            href={`/wife/${r.slug}`}
+            className="cursor-pointer rounded-3xl border border-black/10 p-4 transition-colors duration-150 hover:bg-fill active:bg-fill"
           >
-            {idea.img ? (
-              <img
-                src={idea.img.startsWith("http") ? idea.img : BASE + idea.img}
-                alt=""
-                className="h-10 w-10 shrink-0 rounded-xl object-cover"
-                loading="lazy"
-              />
-            ) : (
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-fill">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-muted" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
-                </svg>
-              </span>
-            )}
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-[15px] font-medium">{idea.title}</span>
-              <span className="block truncate text-[13px] text-muted">{idea.note}</span>
-            </span>
-            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 stroke-black/25" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </a>
+            <p className="text-[13px] font-semibold text-muted">{r.n}</p>
+            <h3 className="mt-1 text-[16px] font-semibold leading-snug">{r.title}</h3>
+            <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-muted">{r.tagline}</p>
+          </Link>
         ))}
+        <Link
+          href="/nursing"
+          className="cursor-pointer rounded-3xl bg-foreground p-4 text-white transition-transform duration-150 active:scale-[0.98]"
+        >
+          <p className="text-[13px] font-semibold text-white/50">✦</p>
+          <h3 className="mt-1 text-[16px] font-semibold leading-snug">{NURSING_WIFE.title}</h3>
+          <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white/60">Special notes — just for you</p>
+        </Link>
       </div>
 
-      <Link
-        href="/import"
-        aria-label="Save a recipe from Instagram"
-        className="fixed bottom-24 right-5 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-foreground text-white shadow-lg transition-transform active:scale-90 sm:right-[max(1.25rem,calc(50vw-21rem))]"
-      >
-        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
+      <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">Feeding Josh</h2>
+      <Link href="/recipes" className="group block cursor-pointer">
+        <div className="relative overflow-hidden rounded-3xl">
+          <img
+            src={`${BASE}/photos/garlic-parm-pasta.jpg`}
+            alt="Joshua's Table"
+            className="h-44 w-full object-cover transition-transform duration-300 group-active:scale-[1.02]"
+          />
+          <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent px-4 pb-4 pt-12">
+            <span className="block text-[19px] font-bold text-white">Joshua&apos;s Table</span>
+            <span className="block text-[13px] font-medium text-white/80">
+              Recipes · meal plans · everything Josh loves
+            </span>
+          </span>
+        </div>
       </Link>
+
+      <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">The six principles</h2>
+      <ol className="overflow-hidden rounded-3xl border border-black/10">
+        {PRINCIPLES.map((p, i) => (
+          <li key={i} className="flex gap-3 border-b border-black/5 px-4 py-3 text-[14px] leading-relaxed last:border-b-0">
+            <span className="font-semibold text-muted">{i + 1}</span>
+            {p}
+          </li>
+        ))}
+      </ol>
+
+      <p className="mt-8 text-center text-[13px] text-muted">Made with love, for everyday use.</p>
     </div>
   );
 }
