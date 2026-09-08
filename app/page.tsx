@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ROLES, PRINCIPLES, FOUNDATION, NURSING_WIFE } from "@/lib/wife";
-import { BASE } from "@/lib/base";
+import { ROLES, PRINCIPLES, FOUNDATION } from "@/lib/wife";
 
 export default function HomePage() {
   const [splash, setSplash] = useState(false);
@@ -63,7 +62,7 @@ export default function HomePage() {
         {ROLES.map((r) => (
           <Link
             key={r.slug}
-            href={`/wife/${r.slug}`}
+            href={r.slug === "cook" ? "/recipes" : `/wife/${r.slug}`}
             className="cursor-pointer rounded-3xl border border-black/10 p-4 transition-colors duration-150 hover:bg-fill active:bg-fill"
           >
             <p className="text-[13px] font-semibold text-muted">{r.n}</p>
@@ -72,31 +71,16 @@ export default function HomePage() {
           </Link>
         ))}
         <Link
-          href="/nursing"
+          href="/husband"
           className="cursor-pointer rounded-3xl bg-foreground p-4 text-white transition-transform duration-150 active:scale-[0.98]"
         >
           <p className="text-[13px] font-semibold text-white/50">✦</p>
-          <h3 className="mt-1 text-[16px] font-semibold leading-snug">{NURSING_WIFE.title}</h3>
-          <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white/60">Special notes — just for you</p>
+          <h3 className="mt-1 text-[16px] font-semibold leading-snug">From Your Husband</h3>
+          <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white/60">
+            Things I need my wife to learn &amp; know
+          </p>
         </Link>
       </div>
-
-      <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">Feeding Josh</h2>
-      <Link href="/recipes" className="group block cursor-pointer">
-        <div className="relative overflow-hidden rounded-3xl">
-          <img
-            src={`${BASE}/photos/garlic-parm-pasta.jpg`}
-            alt="Joshua's Table"
-            className="h-44 w-full object-cover transition-transform duration-300 group-active:scale-[1.02]"
-          />
-          <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent px-4 pb-4 pt-12">
-            <span className="block text-[19px] font-bold text-white">Joshua&apos;s Table</span>
-            <span className="block text-[13px] font-medium text-white/80">
-              Recipes · meal plans · everything Josh loves
-            </span>
-          </span>
-        </div>
-      </Link>
 
       <h2 className="mb-3 mt-10 text-[20px] font-semibold tracking-tight">The six principles</h2>
       <ol className="overflow-hidden rounded-3xl border border-black/10">

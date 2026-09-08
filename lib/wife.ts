@@ -39,6 +39,9 @@ export const ROLES: Role[] = [
     listen: [
       { label: "The virtuous woman", query: DAG + "virtuous woman" },
       { label: "Submission in marriage", query: DAG + "submission marriage" },
+      { label: "How to pray", query: DAG + "how to pray" },
+      { label: "Loving God", query: DAG + "loving God" },
+      { label: "Quiet time with God", query: DAG + "quiet time" },
     ],
     read: ["Model Marriage — Dag Heward-Mills (Ch. 12–13)", "Those Who Are Proud — Dag Heward-Mills", "Proverbs 31"],
   },
@@ -62,6 +65,8 @@ export const ROLES: Role[] = [
     listen: [
       { label: "Hard work & excellence", query: DAG + "hard work excellence" },
       { label: "The Proverbs 31 woman", query: DAG + "Proverbs 31" },
+      { label: "Diligence", query: DAG + "diligence" },
+      { label: "Strive for excellence", query: DAG + "strive for excellence art of leadership" },
     ],
     read: ["Model Marriage — Dag Heward-Mills", "Proverbs 31"],
   },
@@ -83,6 +88,8 @@ export const ROLES: Role[] = [
     listen: [
       { label: "Raising godly children", query: DAG + "parenting children" },
       { label: "The Christian home", query: DAG + "Christian home" },
+      { label: "Training your children", query: DAG + "training children" },
+      { label: "Motherhood", query: DAG + "mothers" },
     ],
     read: ["Model Marriage — Dag Heward-Mills (Ch. 57: Parenting)"],
   },
@@ -104,6 +111,8 @@ export const ROLES: Role[] = [
     listen: [
       { label: "Marriage & intimacy", query: DAG + "marriage intimacy" },
       { label: "Love in marriage", query: DAG + "love in marriage" },
+      { label: "Model marriage", query: DAG + "model marriage" },
+      { label: "Understanding your husband", query: DAG + "understanding men marriage" },
     ],
     read: ["Model Marriage — Dag Heward-Mills (Sections 9–12)"],
   },
@@ -122,7 +131,11 @@ export const ROLES: Role[] = [
       "Cooking is an art which must be learnt and mastered!",
       "She bringeth her food from afar. — Proverbs 31:14",
     ],
-    listen: [{ label: "Duties of the wife", query: DAG + "duties of the wife" }],
+    listen: [
+      { label: "Duties of the wife", query: DAG + "duties of the wife" },
+      { label: "The total wife", query: DAG + "total wife" },
+      { label: "Serving your husband", query: DAG + "serving your husband" },
+    ],
     read: ["Model Marriage — Dag Heward-Mills (Ch. 12)", "Joshua's Table — the food guide in this app"],
   },
   {
@@ -140,7 +153,11 @@ export const ROLES: Role[] = [
       "She looketh well to the ways of her household, and eateth not the bread of idleness. — Proverbs 31:27",
       "I will organize, delegate or get help and use it when I have to.",
     ],
-    listen: [{ label: "Home keeping", query: DAG + "home keeping wife" }],
+    listen: [
+      { label: "Home keeping", query: DAG + "home keeping wife" },
+      { label: "The Christian home", query: DAG + "Christian home" },
+      { label: "Order and organization", query: DAG + "order organization" },
+    ],
     read: ["Model Marriage — Dag Heward-Mills (Ch. 14: Home Keeping and House Helps)"],
   },
   {
@@ -164,6 +181,9 @@ export const ROLES: Role[] = [
     listen: [
       { label: "Communication in marriage", query: DAG + "communication marriage" },
       { label: "Friendship in marriage", query: DAG + "friendship marriage" },
+      { label: "Kindness", query: DAG + "kindness" },
+      { label: "Avoiding quarrels", query: DAG + "quarrels marriage" },
+      { label: "Encouraging your husband", query: DAG + "encourage husband" },
     ],
     read: ["Model Marriage — Dag Heward-Mills (Ch. 8–9)"],
   },
