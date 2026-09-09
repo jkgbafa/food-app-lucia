@@ -6,7 +6,7 @@
   "scope": "/food-app-lucia/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#181614",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "/food-app-lucia/icon-192.png",
